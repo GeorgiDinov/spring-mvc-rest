@@ -3,6 +3,7 @@ package com.georgidinov.springmvcrest.service;
 import com.georgidinov.springmvcrest.api.v1.mapper.CategoryMapper;
 import com.georgidinov.springmvcrest.api.v1.model.CategoryDTO;
 import com.georgidinov.springmvcrest.repository.CategoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryMapper categoryMapper;
 
 
+    @Autowired
     public CategoryServiceImpl(CategoryRepository categoryRepository, CategoryMapper categoryMapper) {
         this.categoryRepository = categoryRepository;
         this.categoryMapper = categoryMapper;

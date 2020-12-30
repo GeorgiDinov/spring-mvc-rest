@@ -6,6 +6,8 @@ import com.georgidinov.springmvcrest.api.v1.model.CustomerListDTO;
 import com.georgidinov.springmvcrest.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.stream.Collectors;
+
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
@@ -19,12 +21,19 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerListDTO getAllCustomers() {
-        return null;
+        return CustomerListDTO.builder().customerDTOS(
+                this.customerRepository.findAll()
+                        .stream()
+                        .map(customerMapper::customerToCustomerDTO)
+                        .collect(Collectors.toList())
+        ).build();
     }
 
     @Override
     public CustomerDTO findCustomerById(Long id) {
-        return null;
+        return this.customerRepository.findById(id)
+                .map(customerMapper::customerToCustomerDTO)
+                .orElseThrow();
     }
 
 }

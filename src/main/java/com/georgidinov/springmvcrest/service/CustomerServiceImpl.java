@@ -2,10 +2,10 @@ package com.georgidinov.springmvcrest.service;
 
 import com.georgidinov.springmvcrest.api.v1.mapper.CustomerMapper;
 import com.georgidinov.springmvcrest.api.v1.model.CustomerDTO;
-import com.georgidinov.springmvcrest.api.v1.model.CustomerListDTO;
 import com.georgidinov.springmvcrest.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,13 +20,16 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerListDTO getAllCustomers() {
-        return CustomerListDTO.builder().customerDTOS(
-                this.customerRepository.findAll()
-                        .stream()
-                        .map(customerMapper::customerToCustomerDTO)
-                        .collect(Collectors.toList())
-        ).build();
+    public List<CustomerDTO> getAllCustomers() {
+        return this.customerRepository.findAll()
+                .stream()
+                .map(customer -> CustomerDTO.builder()
+                        .firstName(customer.getFirstName())
+                        .lastName(customer.getLastName())
+                        .customerUrl("/api/v1/customers/" + customer.getId())
+                        .build()
+                )
+                .collect(Collectors.toList());
     }
 
     @Override

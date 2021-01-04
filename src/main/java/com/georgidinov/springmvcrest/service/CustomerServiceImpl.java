@@ -2,6 +2,7 @@ package com.georgidinov.springmvcrest.service;
 
 import com.georgidinov.springmvcrest.api.v1.mapper.CustomerMapper;
 import com.georgidinov.springmvcrest.api.v1.model.CustomerDTO;
+import com.georgidinov.springmvcrest.domain.Customer;
 import com.georgidinov.springmvcrest.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
@@ -39,4 +40,12 @@ public class CustomerServiceImpl implements CustomerService {
                 .orElseThrow();
     }
 
+    @Override
+    public CustomerDTO createNewCustomer(CustomerDTO customerDTO) {
+        Customer customer = customerMapper.customerDTOToCustomer(customerDTO);
+        Customer savedCustomer = this.customerRepository.save(customer);
+        CustomerDTO savedCustomerDTO = customerMapper.customerToCustomerDTO(savedCustomer);
+        savedCustomerDTO.setCustomerUrl("/api/v1/customers/" + savedCustomer.getId());
+        return savedCustomerDTO;
+    }
 }

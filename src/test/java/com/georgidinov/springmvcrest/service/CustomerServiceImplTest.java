@@ -77,4 +77,21 @@ class CustomerServiceImplTest {
         assertEquals(customerDTO.getFirstName(), savedDTO.getFirstName());
         assertEquals("/api/v1/customers/1", savedDTO.getCustomerUrl());
     }
+
+    @Test
+    void updateCustomer() {
+        //given
+        CustomerDTO customerDTO = CustomerDTO.builder().firstName("John").lastName("Doe").build();
+        Customer customer = Customer.builder().id(1L)
+                .firstName(customerDTO.getFirstName()).lastName(customerDTO.getLastName()).build();
+
+        when(customerRepository.save(any(Customer.class))).thenReturn(customer);
+
+        //when
+        CustomerDTO savedDTO = this.customerService.updateCustomer(1L, customerDTO);
+
+        //then
+        assertEquals(customerDTO.getFirstName(), savedDTO.getFirstName());
+        assertEquals("/api/v1/customers/1", savedDTO.getCustomerUrl());
+    }
 }

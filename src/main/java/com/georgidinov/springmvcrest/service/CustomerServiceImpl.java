@@ -4,6 +4,7 @@ import com.georgidinov.springmvcrest.api.v1.mapper.CustomerMapper;
 import com.georgidinov.springmvcrest.api.v1.model.CustomerDTO;
 import com.georgidinov.springmvcrest.domain.Customer;
 import com.georgidinov.springmvcrest.repository.CustomerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,14 +13,19 @@ import java.util.stream.Collectors;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
+    //== fields ==
     private final CustomerMapper customerMapper;
     private final CustomerRepository customerRepository;
 
+    //== constructors ==
+    @Autowired
     public CustomerServiceImpl(CustomerMapper customerMapper, CustomerRepository customerRepository) {
         this.customerMapper = customerMapper;
         this.customerRepository = customerRepository;
     }
 
+
+    //== public methods ==
     @Override
     public List<CustomerDTO> getAllCustomers() {
         return this.customerRepository.findAll()
@@ -37,7 +43,7 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDTO findCustomerById(Long id) {
         return this.customerRepository.findById(id)
                 .map(customerMapper::customerToCustomerDTO)
-                .orElseThrow();
+                .orElseThrow();// todo custom exception
     }
 
     @Override
@@ -52,7 +58,24 @@ public class CustomerServiceImpl implements CustomerService {
         return this.saveCustomer(customer);
     }
 
+    @Override
+    public CustomerDTO patchCustomer(Long id, CustomerDTO customerDTO) {
+        return customerRepository.findById(id).map(customer -> {
 
+            if(customerDTO.getFirstName() != null){
+                customer.setFirstName(customerDTO.getFirstName());
+            }
+
+            if(customerDTO.getLastName() != null){
+                customer.setLastName(customerDTO.getLastName());
+            }
+
+            return customerMapper.customerToCustomerDTO(customerRepository.save(customer));
+        }).orElseThrow();// todo custom exception
+    }
+
+
+    //== private methods ==
     private CustomerDTO saveCustomer(Customer customer) {
         Customer savedCustomer = this.customerRepository.save(customer);
         CustomerDTO customerDTO = this.customerMapper.customerToCustomerDTO(savedCustomer);

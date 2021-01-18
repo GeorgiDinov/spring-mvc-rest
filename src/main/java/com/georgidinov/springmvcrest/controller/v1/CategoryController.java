@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import static com.georgidinov.springmvcrest.util.ApplicationConstants.CATEGORIES_BASE_URL;
+
 @Controller
-@RequestMapping("/api/v1/categories")
+@RequestMapping(CATEGORIES_BASE_URL)
 public class CategoryController {
 
     private final CategoryService categoryService;

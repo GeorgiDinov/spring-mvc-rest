@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import static com.georgidinov.springmvcrest.util.ApplicationConstants.CUSTOMERS_BASE_URL;
+
 @Controller
-@RequestMapping("/api/v1/customers")
+@RequestMapping(CUSTOMERS_BASE_URL)
 public class CustomerController {
 
     private final CustomerService customerService;

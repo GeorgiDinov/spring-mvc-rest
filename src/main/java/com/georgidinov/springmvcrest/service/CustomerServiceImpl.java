@@ -3,12 +3,16 @@ package com.georgidinov.springmvcrest.service;
 import com.georgidinov.springmvcrest.api.v1.mapper.CustomerMapper;
 import com.georgidinov.springmvcrest.api.v1.model.CustomerDTO;
 import com.georgidinov.springmvcrest.domain.Customer;
+import com.georgidinov.springmvcrest.exception.ResourceNotFoundException;
 import com.georgidinov.springmvcrest.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.georgidinov.springmvcrest.util.ApplicationConstants.CUSTOMERS_BASE_URL;
+import static com.georgidinov.springmvcrest.util.ApplicationConstants.SEPARATOR;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -33,7 +37,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .map(customer -> CustomerDTO.builder()
                         .firstName(customer.getFirstName())
                         .lastName(customer.getLastName())
-                        .customerUrl("/api/v1/customers/" + customer.getId())
+                        .customerUrl(CUSTOMERS_BASE_URL + SEPARATOR + customer.getId())
                         .build()
                 )
                 .collect(Collectors.toList());
@@ -41,9 +45,10 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDTO findCustomerById(Long id) {
-        return this.customerRepository.findById(id)
-                .map(customerMapper::customerToCustomerDTO)
-                .orElseThrow();// todo custom exception
+        CustomerDTO customerDTO = this.customerRepository.findById(id)
+                .map(customerMapper::customerToCustomerDTO).orElseThrow(ResourceNotFoundException::new);
+        customerDTO.setCustomerUrl(CUSTOMERS_BASE_URL + SEPARATOR + id);
+        return customerDTO;
     }
 
     @Override
@@ -71,9 +76,9 @@ public class CustomerServiceImpl implements CustomerService {
             }
 
             CustomerDTO customerDTO1 = customerMapper.customerToCustomerDTO(customerRepository.save(customer));
-            customerDTO1.setCustomerUrl("/api/v1/customers/" + id);
+            customerDTO1.setCustomerUrl(CUSTOMERS_BASE_URL + SEPARATOR + id);
             return customerDTO1;
-        }).orElseThrow();// todo custom exception
+        }).orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override
@@ -85,7 +90,7 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerDTO saveCustomer(Customer customer) {
         Customer savedCustomer = this.customerRepository.save(customer);
         CustomerDTO customerDTO = this.customerMapper.customerToCustomerDTO(savedCustomer);
-        customerDTO.setCustomerUrl("/api/v1/customers/" + savedCustomer.getId());
+        customerDTO.setCustomerUrl(CUSTOMERS_BASE_URL + SEPARATOR + savedCustomer.getId());
         return customerDTO;
     }
 }

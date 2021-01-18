@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.georgidinov.springmvcrest.util.ApplicationConstants.CUSTOMERS_BASE_URL;
+import static com.georgidinov.springmvcrest.util.ApplicationConstants.SEPARATOR;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -77,7 +79,7 @@ class CustomerServiceImplTest {
 
         //then
         assertEquals(customerDTO.getFirstName(), savedDTO.getFirstName());
-        assertEquals("/api/v1/customers/1", savedDTO.getCustomerUrl());
+        assertEquals(CUSTOMERS_BASE_URL + SEPARATOR + 1, savedDTO.getCustomerUrl());
     }
 
     @Test
@@ -94,7 +96,7 @@ class CustomerServiceImplTest {
 
         //then
         assertEquals(customerDTO.getFirstName(), savedDTO.getFirstName());
-        assertEquals("/api/v1/customers/1", savedDTO.getCustomerUrl());
+        assertEquals(CUSTOMERS_BASE_URL + SEPARATOR + 1, savedDTO.getCustomerUrl());
     }
 
     @Test

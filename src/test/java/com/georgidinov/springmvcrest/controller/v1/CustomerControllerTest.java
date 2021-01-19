@@ -102,7 +102,9 @@ class CustomerControllerTest {
 
         when(customerService.updateCustomer(anyLong(), any(CustomerDTO.class))).thenReturn(returnedCustomerDTO);
 
-        mockMvc.perform(put(CUSTOMERS_BASE_URL + SEPARATOR + 1).contentType(MediaType.APPLICATION_JSON).content(asJsonString(sentCustomerDTO)))
+        mockMvc.perform(put(CUSTOMERS_BASE_URL + SEPARATOR + 1)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(sentCustomerDTO)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstName", equalTo("Michale")))
                 .andExpect(jsonPath("$.lastName", equalTo("Weston")))

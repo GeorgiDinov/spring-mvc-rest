@@ -108,7 +108,7 @@ class VendorServiceImplTest {
     }
 
     @Test
-    void patchVendor() {
+    void patchVendor() {//todo:
         //given
         Optional<Vendor> vendor = Optional.ofNullable(Vendor.builder().id(1L).name("Test Vendor Name").build());
         VendorDTO vendorDTO = VendorDTO.builder().name(null).build();

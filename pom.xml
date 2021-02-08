@@ -17,6 +17,7 @@
     <properties>
         <java.version>11</java.version>
         <mapstruct.version>1.4.1.Final</mapstruct.version>
+        <springdoc-openapi.version>1.5.3</springdoc-openapi.version>
     </properties>
 
     <dependencies>
@@ -51,6 +52,13 @@
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
             <version>${mapstruct.version}</version>
+        </dependency>
+
+        <!-- Open Api -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>${springdoc-openapi.version}</version>
         </dependency>
 
         <dependency>

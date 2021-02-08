@@ -3,6 +3,10 @@ package com.georgidinov.springmvcrest.controller.v1;
 import com.georgidinov.springmvcrest.api.v1.model.VendorDTO;
 import com.georgidinov.springmvcrest.api.v1.model.VendorListDTO;
 import com.georgidinov.springmvcrest.service.VendorService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -31,6 +35,16 @@ public class VendorController {
     //== fields ==
     private final VendorService vendorService;
 
+
+    @Operation(summary = "This Operation Retrieves All Vendors Stored In DB")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Retrieve All Vendors From DB",
+                    content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404",
+                    description = "NOT Found",
+                    content = @Content)
+    })
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public VendorListDTO getAllVendors() {

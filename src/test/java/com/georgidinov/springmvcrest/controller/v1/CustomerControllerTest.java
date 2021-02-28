@@ -65,6 +65,7 @@ class CustomerControllerTest {
         when(customerService.getAllCustomers()).thenReturn(customerDTOS);
 
         mockMvc.perform(get(CUSTOMERS_BASE_URL)
+                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.customerDTOS", hasSize(2)));
@@ -82,6 +83,7 @@ class CustomerControllerTest {
         when(customerService.findCustomerById(anyLong())).thenReturn(customer);
 
         mockMvc.perform(get(CUSTOMERS_BASE_URL + SEPARATOR + 1)
+                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON).content(asJsonString(customer)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstName", equalTo("Michale")));
@@ -103,6 +105,7 @@ class CustomerControllerTest {
         when(customerService.updateCustomer(anyLong(), any(CustomerDTO.class))).thenReturn(returnedCustomerDTO);
 
         mockMvc.perform(put(CUSTOMERS_BASE_URL + SEPARATOR + 1)
+                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(sentCustomerDTO)))
                 .andExpect(status().isOk())
@@ -125,6 +128,7 @@ class CustomerControllerTest {
         when(customerService.patchCustomer(anyLong(), any(CustomerDTO.class))).thenReturn(returnDTO);
 
         mockMvc.perform(patch(CUSTOMERS_BASE_URL + SEPARATOR + 1)
+                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(customer)))
                 .andExpect(status().isOk())
@@ -136,6 +140,7 @@ class CustomerControllerTest {
     @Test
     void deleteCustomer() throws Exception {
         mockMvc.perform(delete(CUSTOMERS_BASE_URL + SEPARATOR + 1)
+                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
@@ -148,6 +153,7 @@ class CustomerControllerTest {
         when(customerService.findCustomerById(anyLong())).thenThrow(ResourceNotFoundException.class);
 
         mockMvc.perform(get(CUSTOMERS_BASE_URL + "/222")
+                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }

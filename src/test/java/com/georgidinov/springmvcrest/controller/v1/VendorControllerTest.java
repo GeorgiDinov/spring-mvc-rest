@@ -65,7 +65,9 @@ class VendorControllerTest extends AbstractRestControllerTest {
         when(vendorService.getAllVendors()).thenReturn(vendorDTOS);
 
         //when then
-        mockMvc.perform(get(VENDORS_BASE_URL).contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get(VENDORS_BASE_URL)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.vendorDTOS", hasSize(2)));
 
@@ -82,6 +84,7 @@ class VendorControllerTest extends AbstractRestControllerTest {
         when(vendorService.findVendorById(anyLong())).thenReturn(vendor);
 
         mockMvc.perform(get(VENDORS_BASE_URL + SEPARATOR + 1)
+                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", equalTo(vendor.getName())));
@@ -97,6 +100,7 @@ class VendorControllerTest extends AbstractRestControllerTest {
         when(vendorService.createNewVendor(any(VendorDTO.class))).thenReturn(returnedVendorDTO);
 
         mockMvc.perform(post(VENDORS_BASE_URL)
+                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(sentVendorDTO)))
                 .andExpect(status().isCreated())
@@ -114,6 +118,7 @@ class VendorControllerTest extends AbstractRestControllerTest {
         when(vendorService.updateVendor(anyLong(), any(VendorDTO.class))).thenReturn(returnedVendorDTO);
 
         mockMvc.perform(put(VENDORS_BASE_URL + SEPARATOR + 1)
+                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(sentVendorDTO)))
                 .andExpect(status().isOk())
@@ -131,6 +136,7 @@ class VendorControllerTest extends AbstractRestControllerTest {
         when(vendorService.patchVendor(anyLong(), any(VendorDTO.class))).thenReturn(returnedVendorDTO);
 
         mockMvc.perform(patch(VENDORS_BASE_URL + SEPARATOR + 1)
+                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(sentVendorDTO)))
                 .andExpect(status().isOk())
@@ -141,6 +147,7 @@ class VendorControllerTest extends AbstractRestControllerTest {
     @Test
     void deleteVendor() throws Exception {
         mockMvc.perform(delete(VENDORS_BASE_URL + SEPARATOR + 1)
+                .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
         verify(vendorService).deleteVendorById(anyLong());

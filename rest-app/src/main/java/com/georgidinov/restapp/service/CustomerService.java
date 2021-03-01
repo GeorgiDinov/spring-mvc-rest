@@ -1,0 +1,20 @@
+package com.georgidinov.restapp.service;
+
+import com.georgidinov.restapp.api.v1.model.CustomerDTO;
+
+import java.util.List;
+
+public interface CustomerService {
+
+    List<CustomerDTO> getAllCustomers();
+
+    CustomerDTO findCustomerById(Long id);
+
+    CustomerDTO createNewCustomer(CustomerDTO customerDTO);
+
+    CustomerDTO updateCustomer(Long id, CustomerDTO customerDTO);
+
+    CustomerDTO patchCustomer(Long id, CustomerDTO customerDTO);
+
+    void deleteCustomerById(Long id);
+}

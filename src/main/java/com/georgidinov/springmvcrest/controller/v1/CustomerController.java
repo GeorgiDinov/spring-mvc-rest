@@ -32,7 +32,7 @@ public class CustomerController {
     @GetMapping
     public ResponseEntity<CustomerListDTO> getAllCustomers() {
         return new ResponseEntity<>(
-                CustomerListDTO.builder().customerDTOS(this.customerService.getAllCustomers()).build(),
+                CustomerListDTO.builder().customers(this.customerService.getAllCustomers()).build(),
                 HttpStatus.OK
         );
     }

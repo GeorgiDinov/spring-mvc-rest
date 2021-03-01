@@ -1,5 +1,6 @@
 package com.georgidinov.springmvcrest.api.v1.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,6 +16,7 @@ import java.util.List;
 @Builder
 public class CustomerListDTO {
 
-    private List<CustomerDTO> customerDTOS;
+    @JsonProperty("customers")
+    private List<CustomerDTO> customers;
 
 }

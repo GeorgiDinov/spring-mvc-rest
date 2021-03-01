@@ -68,7 +68,7 @@ class CustomerControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.customerDTOS", hasSize(2)));
+                .andExpect(jsonPath("$.customers", hasSize(2)));
     }
 
     @Test

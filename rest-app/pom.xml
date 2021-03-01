@@ -19,6 +19,14 @@
 
     <dependencies>
 
+        <!-- todo refactor module to use rest model types       -->
+        <dependency>
+            <groupId>com.georgidinov</groupId>
+            <artifactId>rest-model</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
